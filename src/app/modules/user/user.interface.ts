@@ -1,10 +1,10 @@
 
 export enum Role{
     ADMIN = "ADMIN",
-    SENDER = "SENDER",
+    USER = "USER",
     RECIEVER = "RECIEVER"
 }
-export interface AuthProvider {
+export interface IAuthProvider {
     provider: string,
     providerId: string
 }
@@ -25,6 +25,6 @@ export interface IUser {
     isDeleted?: boolean,
     isActive?: IsActive,
     role: Role,
-    auth: AuthProvider[],
+    auth: IAuthProvider[],
     parcel?: string,
 }
