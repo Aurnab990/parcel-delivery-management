@@ -2,7 +2,7 @@
 export enum Role{
     ADMIN = "ADMIN",
     USER = "USER",
-    RECIEVER = "RECIEVER"
+    RECEIVER = "RECEIVER"
 }
 export interface IAuthProvider {
     provider: string,
