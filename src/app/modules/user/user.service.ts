@@ -1,3 +1,5 @@
+import { StatusCodes } from "http-status-codes";
+import AppError from "../../errorHelpers/AppError";
 import { IAuthProvider, IUser } from "./user.interface";
 import { User } from "./user.model";
 import bcrypt from "bcrypt";
@@ -7,7 +9,7 @@ const createUser = async(playload: Partial<IUser>) =>{
     const isUserExits = await User.findOne( {email} );
 
     if(isUserExits){
-        throw new Error("User already exits");
+        throw new AppError(StatusCodes.BAD_REQUEST,"User already exits");
     }
 
     const hashPassword = await bcrypt.hash(password as string, 10);
