@@ -1,21 +1,19 @@
 import { NextFunction, Request, Response } from "express";
 import { userService } from "./user.service";
 import { StatusCodes } from "http-status-codes";
+import { catchAsync } from "../../utils/catchAsync";
 
 
-const createUser = async(req: Request, res: Response, next: NextFunction) =>{
-    try {
-        const user = await userService.createUser(req.body);
+const createUser = catchAsync(async(req: Request, res: Response, next: NextFunction) =>{
+ 
+    const user = await userService.createUser(req.body);
         // console.log(user);
-        res.status(StatusCodes.ACCEPTED).json({
+        res.status(StatusCodes.CREATED).json({
             success: true,
             message: "User created Succesfully",
-            user
+            data: user
         }) 
-    } catch (error) {
-        console.log(error);
-    }
-}
+})
 
 export const userController = {
     createUser,
