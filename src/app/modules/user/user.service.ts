@@ -3,16 +3,17 @@ import AppError from "../../errorHelpers/AppError";
 import { IAuthProvider, IUser } from "./user.interface";
 import { User } from "./user.model";
 import bcrypt from "bcrypt";
+import { envVar } from "../../../config/env";
 
-const createUser = async(playload: Partial<IUser>) =>{
-    const { email, password, ...rest} = playload;
+const createUser = async(payload: Partial<IUser>) =>{
+    const { email, password, ...rest} = payload;
     const isUserExits = await User.findOne( {email} );
 
     if(isUserExits){
         throw new AppError(StatusCodes.BAD_REQUEST,"User already exits");
     }
 
-    const hashPassword = await bcrypt.hash(password as string, 10);
+    const hashPassword = await bcrypt.hash(password as string, Number(envVar.BECRYPT_SALT_ROUND));
     // console.log(hashPassword);
     // const isPasswordMatch = await bcrypt.compare(password as string, hashPassword);
     // console.log(isPasswordMatch);
@@ -30,7 +31,25 @@ const createUser = async(playload: Partial<IUser>) =>{
     return user;
 }
 
+const updateUser = async(payload: Partial<IUser>) =>{
+    
+}
+
+const getAllUsers = async() =>{
+    const users = await User.find({});
+    const totalUsers = await User.countDocuments();
+    return {
+        data: users,
+        meta: {
+            totalUsers,
+        }
+    }
+}
+
+
+
 
 export const userService = {
-    createUser
+    createUser,
+    getAllUsers,
 }
