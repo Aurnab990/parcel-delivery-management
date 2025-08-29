@@ -1,9 +1,10 @@
 import { StatusCodes } from "http-status-codes";
 import AppError from "../../errorHelpers/AppError";
-import { IAuthProvider, IUser } from "./user.interface";
+import { IAuthProvider, IUser, Role } from "./user.interface";
 import { User } from "./user.model";
 import bcrypt from "bcrypt";
 import { envVar } from "../../../config/env";
+import { JwtPayload } from "jsonwebtoken";
 
 const createUser = async(payload: Partial<IUser>) =>{
     const { email, password, ...rest} = payload;
@@ -31,8 +32,27 @@ const createUser = async(payload: Partial<IUser>) =>{
     return user;
 }
 
-const updateUser = async(payload: Partial<IUser>) =>{
-    
+const updateUser = async(userId: string, payload: Partial<IUser>, decodedToken: JwtPayload) =>{
+    const ifUserExits = await User.findById(userId);
+    if(!ifUserExits){
+        throw new AppError(StatusCodes.NOT_FOUND, "User not found");
+    }
+    if(payload.role){
+        if(payload.role === Role.USER){
+        throw new AppError(StatusCodes.FORBIDDEN, "Your are not authorized");
+       }
+       if(payload.role === Role.SUPER_ADMIN && decodedToken.role === Role.ADMIN){
+        throw new AppError(StatusCodes.FORBIDDEN, "Your are not authorized");
+       }
+    }
+
+    if(payload.password){
+        payload.password = await bcrypt.hash(payload.password, envVar.BECRYPT_SALT_ROUND);
+    }
+
+    const newUpdatedUser = await User.findByIdAndUpdate(userId, payload, { new: true, runValidators: true });
+
+    return newUpdatedUser;
 }
 
 const getAllUsers = async() =>{
@@ -52,4 +72,5 @@ const getAllUsers = async() =>{
 export const userService = {
     createUser,
     getAllUsers,
+    updateUser,
 }

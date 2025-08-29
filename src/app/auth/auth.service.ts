@@ -20,12 +20,12 @@ const credentialsLogin = async(playload: Partial<IUser>) =>{
         throw new AppError(StatusCodes.BAD_GATEWAY,"Password Incorrect");
     }
 
-    const jwtPlayload = {
+    const jwtPayload = {
         userId: isUserExits._id,
         email: isUserExits.email,
         role: isUserExits.role
     }
-    const accessToken = generateToken(jwtPlayload, envVar.JWT_ACCESS_KEY, envVar.JWT_EXPIRES_IN);
+    const accessToken = generateToken(jwtPayload, envVar.JWT_ACCESS_KEY, envVar.JWT_EXPIRES_IN);
     
 
     // const accessToken = jwt.sign(jwtPlayload, "vAu@3$bUTy!21", {
