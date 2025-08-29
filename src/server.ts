@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import app from "./app";
 import dotenv from "dotenv";
 import { envVar } from "./config/env";
+import { seedSuperAdmin } from "./app/utils/seedSuperAdmin";
 
 
 dotenv.config();
@@ -55,4 +56,7 @@ process.on("SIGTERM",()=>{
     process.exit(1);
 });
 
-startServer();
+( async ()=>{
+    await startServer();
+    await seedSuperAdmin();
+})()
