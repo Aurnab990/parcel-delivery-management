@@ -17,7 +17,8 @@ export const checkAuth =(...authRoles: string[]) => async (req: Request, res: Re
       if(!authRoles.includes(verifyToken.role)){
         throw new AppError(StatusCodes.UNAUTHORIZED,"You are not allowed to this route");
       }
-      console.log(verifyToken);
+      // console.log(verifyToken);
+      req.user = verifyToken
       next();
     } catch (error) {
         console.log(error);
