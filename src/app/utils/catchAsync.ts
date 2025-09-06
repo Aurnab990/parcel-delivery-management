@@ -6,5 +6,5 @@ export const catchAsync = (fn: asyncType) => (req: Request, res: Response, next:
     Promise.resolve(fn(req,res,next)).catch((error: any)=>{
         console.log("Error", error);
         next(error);
-    })
+    });
 }

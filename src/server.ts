@@ -2,8 +2,8 @@ import { Server } from "http";
 import mongoose from "mongoose";
 import app from "./app";
 import dotenv from "dotenv";
-import { envVar } from "./config/env";
 import { seedSuperAdmin } from "./app/utils/seedSuperAdmin";
+import { envVar } from "./app/config/env";
 
 
 dotenv.config();
