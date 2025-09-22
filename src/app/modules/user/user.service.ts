@@ -3,8 +3,8 @@ import AppError from "../../errorHelpers/AppError";
 import { IAuthProvider, IUser, Role } from "./user.interface";
 import { User } from "./user.model";
 import bcrypt from "bcrypt";
-import { envVar } from "../../../config/env";
 import { JwtPayload } from "jsonwebtoken";
+import { envVar } from "../../config/env";
 
 const createUser = async(payload: Partial<IUser>) =>{
     const { email, password, ...rest} = payload;
