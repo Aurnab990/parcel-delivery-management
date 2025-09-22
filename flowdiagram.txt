@@ -1,0 +1,11 @@
++---------+                +--------------------+                +----------+
+| Sender  |   create parcel|   Parcel System    |   assign to    | Receiver |
+| (User)  +--------------->+  (DB + Services)  +--------------->+ (User)   |
++---------+                +--------------------+                +----------+
+     |                              ^                                  |
+     | track parcel (trackingId)    | admin control (CRUD + statuses)  |
+     v                              |                                  |
++----------+                        |                          +------------+
+| Parcel   |------------------------+                          |   Admin    |
+| Statuses |   PENDING → IN_TRANSIT → DELIVERED / CANCELED     | (Manager)  |
++----------+                                                   +------------+
