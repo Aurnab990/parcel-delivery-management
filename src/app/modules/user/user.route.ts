@@ -19,11 +19,22 @@ router.get(
   checkAuth("ADMIN","SUPER_ADMIN"),
   userController.getAllUsers
 );
+router.patch(
+  "/role/:id",
+  checkAuth("SUPER_ADMIN"), 
+  userController.updateUser
+);
 
 router.patch(
-  "/:id",
+  "/update/:id",
   checkAuth(...Object.values(Role)),
   userController.updateUser
+);
+
+router.delete(
+  "/delete/:id",
+  checkAuth("ADMIN","SUPER_ADMIN"),
+  userController.deleteUser
 )
 
 export const userRoutes = router;

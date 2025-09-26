@@ -18,3 +18,4 @@ const parcelSchema = new mongoose_1.Schema({
     }
 }, { timestamps: true, versionKey: false });
 exports.Parcel = (0, mongoose_1.model)("Parcel", parcelSchema);
+// (models.User as mongoose.Model<IParcel>) ||

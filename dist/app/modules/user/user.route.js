@@ -10,5 +10,7 @@ const user_interface_1 = require("./user.interface");
 const router = (0, express_1.Router)();
 router.post("/auth/register", (0, validateRequest_1.validateRequest)(user_validation_1.createUserZodSchema), user_controller_1.userController.createUser);
 router.get("/all-users", (0, checkAuth_1.checkAuth)("ADMIN", "SUPER_ADMIN"), user_controller_1.userController.getAllUsers);
-router.patch("/:id", (0, checkAuth_1.checkAuth)(...Object.values(user_interface_1.Role)), user_controller_1.userController.updateUser);
+router.patch("/role/:id", (0, checkAuth_1.checkAuth)("SUPER_ADMIN"), user_controller_1.userController.updateUser);
+router.patch("/update/:id", (0, checkAuth_1.checkAuth)(...Object.values(user_interface_1.Role)), user_controller_1.userController.updateUser);
+router.delete("/delete/:id", (0, checkAuth_1.checkAuth)("ADMIN", "SUPER_ADMIN"), user_controller_1.userController.deleteUser);
 exports.userRoutes = router;

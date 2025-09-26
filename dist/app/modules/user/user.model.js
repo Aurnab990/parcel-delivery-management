@@ -31,4 +31,4 @@ const userSchema = new mongoose_1.Schema({
     },
     auth: [authSchema]
 }, { timestamps: true, versionKey: false });
-exports.User = (0, mongoose_1.model)("User", userSchema);
+exports.User = mongoose_1.models.User || (0, mongoose_1.model)("User", userSchema);

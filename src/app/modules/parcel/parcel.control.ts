@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import { catchAsync } from "../../utils/catchAsync";
 import { parcelService } from "./parcel.service";
 import { StatusCodes } from "http-status-codes";
-import { success } from "zod";
 import { JwtPayload } from "jsonwebtoken";
 import { Parcel } from "./parcel.model";
 import { Types } from "mongoose";
@@ -68,7 +67,7 @@ const updateParcel = catchAsync(
       success: true,
       message: "Parcel updated successfully",
       data: updatedItem
-    })
+    });
   }
 );
 
@@ -76,13 +75,13 @@ const updateParcel = catchAsync(
 const upadateReceiverStatus = catchAsync(
   async(req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id;
-    const payload = req.body;
-    const updatedItem = await parcelService.updateParcel(id, payload);
+    const status = req.body;
+    const updatedItem = await parcelService.updateParcel(id, status);
     res.status(StatusCodes.ACCEPTED).json({
       success: true,
       message: "Parcel updated successfully",
       data: updatedItem
-    })
+    });
   }
 );
 
@@ -93,7 +92,7 @@ const deleteParcel = catchAsync(
     res.status(StatusCodes.ACCEPTED).json({
       success: true,
       message: "Parcel deleted successfully",
-    })
+    });
   }
 )
 
@@ -105,7 +104,7 @@ const getParcelByTrackingId = catchAsync(
       success: true,
       message: "Parcel found by tracking ID",
       data: result
-    })
+    });
   }
 )
 

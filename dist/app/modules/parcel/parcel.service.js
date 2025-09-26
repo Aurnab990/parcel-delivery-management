@@ -62,7 +62,7 @@ const updateParcel = (id, payload) => __awaiter(void 0, void 0, void 0, function
     return updateParcel;
 });
 // RECEIVER CAN UPDATE STATUS
-const upadateReceiverStatus = (id, user, payload) => __awaiter(void 0, void 0, void 0, function* () {
+const upadateReceiverStatus = (id, user, status) => __awaiter(void 0, void 0, void 0, function* () {
     const exitsParcel = yield parcel_model_1.Parcel.findById(id);
     if (!exitsParcel) {
         throw new AppError_1.default(http_status_codes_1.StatusCodes.NOT_FOUND, "Parcel not found");
@@ -70,7 +70,7 @@ const upadateReceiverStatus = (id, user, payload) => __awaiter(void 0, void 0, v
     if (exitsParcel.receiver._id.toString() !== user.userId) {
         throw new AppError_1.default(http_status_codes_1.StatusCodes.FORBIDDEN, "Sorry! Sender can't update");
     }
-    const updateParcel = yield parcel_model_1.Parcel.findByIdAndUpdate(id, payload, { new: true });
+    const updateParcel = yield parcel_model_1.Parcel.findByIdAndUpdate(id, { status }, { new: true });
     return updateParcel;
 });
 const getParcelByTrackingId = (trackingId) => __awaiter(void 0, void 0, void 0, function* () {

@@ -18,25 +18,8 @@ const credentialsLogin = async(playload: Partial<IUser>) =>{
         throw new AppError(StatusCodes.BAD_GATEWAY,"Password Incorrect");
     }
 
-    // const jwtPayload = {
-    //     userId: isUserExits._id,
-    //     email: isUserExits.email,
-    //     role: isUserExits.role
-    // }
-    // const accessToken = generateToken(jwtPayload, envVar.JWT_ACCESS_KEY, envVar.JWT_EXPIRES_IN);
-    // const refreshToken = generateToken(jwtPayload, envVar.JWT_REFRESH_SECRET, envVar.JWT_REFRESH_EXPIRES);
-
-    // delete isUserExits.password;
-
-    // const accessToken = jwt.sign(jwtPlayload, "vAu@3$bUTy!21", {
-    //     expiresIn: "1d"
-    // })
-
-    // const { password, ...rest } = isUserExits
-
     const userTokens = createUserTokens(isUserExits);
     return {
-        // email: isUserExits.email
         accessToken: userTokens.accessToken,
         refreshToken: userTokens.refreshToken,
         user: isUserExits
@@ -56,4 +39,3 @@ export const authServices = {
     getNewAccessToken
     
 }
-// const userTokens = createUserTokens(isUserExits);

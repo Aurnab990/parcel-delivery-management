@@ -6,11 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.envVar = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-// interface envTypes{
-//     PORT: string,
-//     DB_URL: string,
-//     NODE_DEV: "development" | "production"
-// }
 const loadEnv = {
     port: process.env.PORT,
     db_url: process.env.DB_URL,
@@ -26,6 +21,7 @@ const loadEnv = {
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CALLBACK_URL: process.env.GOOGLE_CALLBACK_URL,
     SESSION_SECRET_KEY: process.env.SESSION_SECRET_KEY,
-    FRONTEND_URL: process.env.FRONTEND_URL
+    FRONTEND_URL: process.env.FRONTEND_URL,
+    NODE_ENV: process.env.NODE_ENV
 };
 exports.envVar = loadEnv;

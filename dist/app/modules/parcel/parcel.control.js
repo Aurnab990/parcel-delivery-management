@@ -68,8 +68,8 @@ const updateParcel = (0, catchAsync_1.catchAsync)((req, res, next) => __awaiter(
 }));
 const upadateReceiverStatus = (0, catchAsync_1.catchAsync)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
-    const payload = req.body;
-    const updatedItem = yield parcel_service_1.parcelService.updateParcel(id, payload);
+    const status = req.body;
+    const updatedItem = yield parcel_service_1.parcelService.updateParcel(id, status);
     res.status(http_status_codes_1.StatusCodes.ACCEPTED).json({
         success: true,
         message: "Parcel updated successfully",

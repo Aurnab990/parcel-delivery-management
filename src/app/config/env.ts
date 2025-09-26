@@ -2,11 +2,6 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-// interface envTypes{
-//     PORT: string,
-//     DB_URL: string,
-//     NODE_DEV: "development" | "production"
-// }
 
 const loadEnv = {
     port: process.env.PORT as string,
@@ -23,7 +18,8 @@ const loadEnv = {
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID as string,
     GOOGLE_CALLBACK_URL: process.env.GOOGLE_CALLBACK_URL as string,
     SESSION_SECRET_KEY: process.env.SESSION_SECRET_KEY as string,
-    FRONTEND_URL: process.env.FRONTEND_URL as string
+    FRONTEND_URL: process.env.FRONTEND_URL as string,
+    NODE_ENV: process.env.NODE_ENV as string
 
 }
 
