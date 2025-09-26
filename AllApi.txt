@@ -1,0 +1,32 @@
+## User ##
+create user : https://parcel-delivery-ass5-dun.vercel.app/api/user/auth/register
+google login : https://parcel-delivery-ass5-dun.vercel.app/api/auth/google
+update user : https://parcel-delivery-ass5-dun.vercel.app/api/user/update/:id
+delete user : https://parcel-delivery-ass5-dun.vercel.app/api/user/delete/:id
+** Super admin only
+update user role : https://parcel-delivery-ass5-dun.vercel.app/api/user/role/:id
+
+** Admin , Super Admin only
+Get all users : https://parcel-delivery-ass5-dun.vercel.app/api/user/all-users
+
+## Auth ## 
+user login : https://parcel-delivery-ass5-dun.vercel.app/api/auth/login
+Super_Admin login : https://parcel-delivery-ass5-dun.vercel.app/api/auth/login
+refresh token : http://localhost:5000/api/auth/refresh-token
+logout : https://parcel-delivery-ass5-dun.vercel.app/api/auth/logout
+
+
+
+## Parcel ##
+create parcel : https://parcel-delivery-ass5-dun.vercel.app/api/parcels/create-parcel
+get parcel : https://parcel-delivery-ass5-dun.vercel.app/api/parcels/me
+update parcel : https://parcel-delivery-ass5-dun.vercel.app/api/parcels/update/:id
+receiver update : https://parcel-delivery-ass5-dun.vercel.app/api/parcels/receiver/update/:id
+delete parcel : https://parcel-delivery-ass5-dun.vercel.app/api/parcels/delete/:id
+
+
+## tracking by id : https://parcel-delivery-ass5-dun.vercel.app/api/parcels/tracking/trackingId
+
+
+
+

@@ -33,6 +33,7 @@ const createUserTokens = (user) => {
     };
 };
 exports.createUserTokens = createUserTokens;
+// refresh token created
 const createTokens = (refreshToken) => __awaiter(void 0, void 0, void 0, function* () {
     const verifyRefreshToken = (0, jwt_1.verifiedToken)(refreshToken, env_1.envVar.JWT_REFRESH_SECRET);
     const isUserExits = yield user_model_1.User.findOne({ email: verifyRefreshToken.email });

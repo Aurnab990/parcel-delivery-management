@@ -3,15 +3,12 @@ import { userService } from "./user.service";
 import { StatusCodes } from "http-status-codes";
 import { catchAsync } from "../../utils/catchAsync";
 import { JwtPayload } from "jsonwebtoken";
-// import { verifiedToken } from "../../utils/jwt";
-// import { envVar } from "../../../config/env";
-
+import AppError from "../../errorHelpers/AppError";
 
 
 const createUser = catchAsync(async(req: Request, res: Response, next: NextFunction) =>{
  
     const user = await userService.createUser(req.body);
-        // console.log(user);
         res.status(StatusCodes.CREATED).json({
             success: true,
             message: "User created Succesfully",
@@ -21,8 +18,6 @@ const createUser = catchAsync(async(req: Request, res: Response, next: NextFunct
 
 const updateUser = catchAsync(async(req: Request, res: Response, next: NextFunction)=>{
     const userId = req.params.id;
-    // const token = req.headers.authorization;
-    // const verifyToken = verifiedToken(token as string, envVar.JWT_ACCESS_KEY);
     const payload = req.body;
     const verifiedToken = req.user as JwtPayload;
     const user = await userService.updateUser(userId, payload, verifiedToken);
@@ -33,6 +28,32 @@ const updateUser = catchAsync(async(req: Request, res: Response, next: NextFunct
             data: user
         });
 });
+const updateUserRole = catchAsync(async(req: Request, res: Response, next: NextFunction) =>{
+    const userId = req.params.id;
+    const role = req.body;
+    const verifiedToken = req.user as JwtPayload;
+    if(verifiedToken.role !== "SUPER_ADMIN"){
+        throw new AppError(StatusCodes.FORBIDDEN, "Warning !! you are not allowed");
+    }
+    const user = await userService.updateUser(userId, role , verifiedToken);
+    res.status(StatusCodes.ACCEPTED).json({
+            success: true,
+            message: "User updated Succesfully",
+            data: user
+        });
+
+});
+
+const deleteUser = catchAsync(
+  async(req: Request, res: Response, NextFunction) => {
+    const { id } = req.params;
+    const result = await userService.deleteUser(id);
+    res.status(StatusCodes.ACCEPTED).json({
+      success: true,
+      message: "User deleted successfully",
+    })
+  }
+)
 
 const getAllUsers = catchAsync(async(req: Request, res: Response, next: NextFunction)=>{
     const result = await userService.getAllUsers();
@@ -48,4 +69,6 @@ export const userController = {
     createUser,
     getAllUsers,
     updateUser,
+    updateUserRole,
+    deleteUser
 }

@@ -27,7 +27,6 @@ const checkAuth = (...authRoles) => (req, res, next) => __awaiter(void 0, void 0
         if (!authRoles.includes(verifyToken.role)) {
             throw new AppError_1.default(http_status_codes_1.StatusCodes.UNAUTHORIZED, "You are not allowed to this route");
         }
-        // console.log(verifyToken);
         req.user = verifyToken;
         next();
     }

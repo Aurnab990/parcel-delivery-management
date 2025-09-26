@@ -1,4 +1,4 @@
-import { model, Schema, Types } from "mongoose";
+import mongoose, { model, models, Schema, Types } from "mongoose";
 import { IParcel, Parcelstatus } from "./parcel.interface";
 
 
@@ -18,4 +18,6 @@ const parcelSchema = new Schema<IParcel>({
     
 },{ timestamps: true , versionKey: false });
 
-export const Parcel = model<IParcel>("Parcel", parcelSchema);
+export const Parcel =  model<IParcel>("Parcel", parcelSchema);
+
+// (models.User as mongoose.Model<IParcel>) ||

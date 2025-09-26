@@ -49,7 +49,7 @@ const updateParcel = async(id: string, payload: Partial<IParcel>) =>{
 }
 
 // RECEIVER CAN UPDATE STATUS
-const upadateReceiverStatus = async(id: string,user: JwtPayload, payload: Partial<IParcel>)=>{
+const upadateReceiverStatus = async(id: string,user: JwtPayload, status: string)=>{
     const exitsParcel = await Parcel.findById(id);
     
     if(!exitsParcel){
@@ -58,7 +58,7 @@ const upadateReceiverStatus = async(id: string,user: JwtPayload, payload: Partia
     if(exitsParcel.receiver._id.toString() !== user.userId){
         throw new AppError(StatusCodes.FORBIDDEN,"Sorry! Sender can't update");
     }
-    const updateParcel = await Parcel.findByIdAndUpdate(id, payload, { new: true });
+    const updateParcel = await Parcel.findByIdAndUpdate(id, { status }, { new: true });
     return updateParcel;
     
 }

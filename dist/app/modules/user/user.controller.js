@@ -8,16 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.userController = void 0;
 const user_service_1 = require("./user.service");
 const http_status_codes_1 = require("http-status-codes");
 const catchAsync_1 = require("../../utils/catchAsync");
-// import { verifiedToken } from "../../utils/jwt";
-// import { envVar } from "../../../config/env";
+const AppError_1 = __importDefault(require("../../errorHelpers/AppError"));
 const createUser = (0, catchAsync_1.catchAsync)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield user_service_1.userService.createUser(req.body);
-    // console.log(user);
     res.status(http_status_codes_1.StatusCodes.CREATED).json({
         success: true,
         message: "User created Succesfully",
@@ -26,8 +27,6 @@ const createUser = (0, catchAsync_1.catchAsync)((req, res, next) => __awaiter(vo
 }));
 const updateUser = (0, catchAsync_1.catchAsync)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = req.params.id;
-    // const token = req.headers.authorization;
-    // const verifyToken = verifiedToken(token as string, envVar.JWT_ACCESS_KEY);
     const payload = req.body;
     const verifiedToken = req.user;
     const user = yield user_service_1.userService.updateUser(userId, payload, verifiedToken);
@@ -35,6 +34,28 @@ const updateUser = (0, catchAsync_1.catchAsync)((req, res, next) => __awaiter(vo
         success: true,
         message: "User updated Succesfully",
         data: user
+    });
+}));
+const updateUserRole = (0, catchAsync_1.catchAsync)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const userId = req.params.id;
+    const role = req.body;
+    const verifiedToken = req.user;
+    if (verifiedToken.role !== "SUPER_ADMIN") {
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.FORBIDDEN, "Warning !! you are not allowed");
+    }
+    const user = yield user_service_1.userService.updateUser(userId, role, verifiedToken);
+    res.status(http_status_codes_1.StatusCodes.ACCEPTED).json({
+        success: true,
+        message: "User updated Succesfully",
+        data: user
+    });
+}));
+const deleteUser = (0, catchAsync_1.catchAsync)((req, res, NextFunction) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const result = yield user_service_1.userService.deleteUser(id);
+    res.status(http_status_codes_1.StatusCodes.ACCEPTED).json({
+        success: true,
+        message: "User deleted successfully",
     });
 }));
 const getAllUsers = (0, catchAsync_1.catchAsync)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -50,4 +71,6 @@ exports.userController = {
     createUser,
     getAllUsers,
     updateUser,
+    updateUserRole,
+    deleteUser
 };

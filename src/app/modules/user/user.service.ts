@@ -15,9 +15,6 @@ const createUser = async(payload: Partial<IUser>) =>{
     }
 
     const hashPassword = await bcrypt.hash(password as string, Number(envVar.BECRYPT_SALT_ROUND));
-    // console.log(hashPassword);
-    // const isPasswordMatch = await bcrypt.compare(password as string, hashPassword);
-    // console.log(isPasswordMatch);
 
     const authProvider: IAuthProvider = { provider: "credentials", providerId: email as string}
 
@@ -55,6 +52,15 @@ const updateUser = async(userId: string, payload: Partial<IUser>, decodedToken: 
     return newUpdatedUser;
 }
 
+const updateUserRole = async(id: string, role: string) => {
+    const exitsUser = await User.findById(id);
+    if(!exitsUser){
+        throw new AppError(StatusCodes.NOT_FOUND, "User not found");
+    }
+    const updateUser = await User.findByIdAndUpdate(id, { role }, {new: true});
+    return updateUser;
+
+}
 const getAllUsers = async() =>{
     const users = await User.find({});
     const totalUsers = await User.countDocuments();
@@ -66,6 +72,14 @@ const getAllUsers = async() =>{
     }
 }
 
+const deleteUser = async(id: string) =>{
+    const user = await User.findByIdAndDelete(id);
+    if(!user){
+        throw new AppError(StatusCodes.NOT_FOUND,"User not found");
+    }
+    return null;
+
+}
 
 
 
@@ -73,4 +87,6 @@ export const userService = {
     createUser,
     getAllUsers,
     updateUser,
+    updateUserRole,
+    deleteUser
 }

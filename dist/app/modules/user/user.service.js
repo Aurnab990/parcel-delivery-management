@@ -37,9 +37,6 @@ const createUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
         throw new AppError_1.default(http_status_codes_1.StatusCodes.BAD_REQUEST, "User already exits");
     }
     const hashPassword = yield bcrypt_1.default.hash(password, Number(env_1.envVar.BECRYPT_SALT_ROUND));
-    // console.log(hashPassword);
-    // const isPasswordMatch = await bcrypt.compare(password as string, hashPassword);
-    // console.log(isPasswordMatch);
     const authProvider = { provider: "credentials", providerId: email };
     const user = yield user_model_1.User.create(Object.assign(Object.assign({ email, password: hashPassword }, rest), { authProvider: [authProvider] }));
     return user;
@@ -63,6 +60,14 @@ const updateUser = (userId, payload, decodedToken) => __awaiter(void 0, void 0, 
     const newUpdatedUser = yield user_model_1.User.findByIdAndUpdate(userId, payload, { new: true, runValidators: true });
     return newUpdatedUser;
 });
+const updateUserRole = (id, role) => __awaiter(void 0, void 0, void 0, function* () {
+    const exitsUser = yield user_model_1.User.findById(id);
+    if (!exitsUser) {
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.NOT_FOUND, "User not found");
+    }
+    const updateUser = yield user_model_1.User.findByIdAndUpdate(id, { role }, { new: true });
+    return updateUser;
+});
 const getAllUsers = () => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield user_model_1.User.find({});
     const totalUsers = yield user_model_1.User.countDocuments();
@@ -73,8 +78,17 @@ const getAllUsers = () => __awaiter(void 0, void 0, void 0, function* () {
         }
     };
 });
+const deleteUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield user_model_1.User.findByIdAndDelete(id);
+    if (!user) {
+        throw new AppError_1.default(http_status_codes_1.StatusCodes.NOT_FOUND, "User not found");
+    }
+    return null;
+});
 exports.userService = {
     createUser,
     getAllUsers,
     updateUser,
+    updateUserRole,
+    deleteUser
 };
