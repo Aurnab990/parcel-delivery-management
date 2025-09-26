@@ -90,5 +90,9 @@ npm run dev
 npm run build
 npm start
 
+---
+
 ## Developed by
-# Aurnab Das
+- Aurnab Das
+
+---
