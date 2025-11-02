@@ -19,6 +19,11 @@ router.get(
   checkAuth("ADMIN","SUPER_ADMIN"),
   userController.getAllUsers
 );
+router.get(
+  "/me/:id",
+  checkAuth("ADMIN","SUPER_ADMIN","USER"),
+  userController.getSingleUser
+);
 router.patch(
   "/role/:id",
   checkAuth("SUPER_ADMIN"), 
