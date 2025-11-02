@@ -61,6 +61,14 @@ const updateUserRole = async(id: string, role: string) => {
     return updateUser;
 
 }
+
+const getSingleUser = async(id: string) =>{
+    const user = await User.findById(id);
+    return {
+        data: user
+    }
+
+}
 const getAllUsers = async() =>{
     const users = await User.find({});
     const totalUsers = await User.countDocuments();
@@ -86,6 +94,7 @@ const deleteUser = async(id: string) =>{
 export const userService = {
     createUser,
     getAllUsers,
+    getSingleUser,
     updateUser,
     updateUserRole,
     deleteUser

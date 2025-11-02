@@ -68,6 +68,12 @@ const updateUserRole = (id, role) => __awaiter(void 0, void 0, void 0, function*
     const updateUser = yield user_model_1.User.findByIdAndUpdate(id, { role }, { new: true });
     return updateUser;
 });
+const getSingleUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield user_model_1.User.findById(id);
+    return {
+        data: user
+    };
+});
 const getAllUsers = () => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield user_model_1.User.find({});
     const totalUsers = yield user_model_1.User.countDocuments();
@@ -88,6 +94,7 @@ const deleteUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
 exports.userService = {
     createUser,
     getAllUsers,
+    getSingleUser,
     updateUser,
     updateUserRole,
     deleteUser

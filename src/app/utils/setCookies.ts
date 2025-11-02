@@ -9,13 +9,13 @@ export const setCokies = (res: Response, tokenInfo: authTokens) =>{
     if(tokenInfo.accessToken){
         res.cookie("accessToken", tokenInfo.accessToken, {
         httpOnly: true,
-        secure: envVar.NODE_ENV === "production",
+        secure: true,
         sameSite: "none"
 
     });
     if(tokenInfo.refreshToken){
         res.cookie("refreshToken", tokenInfo.refreshToken, {
-        secure: envVar.NODE_ENV === "production",
+        secure: true,
         sameSite: "none"
     });
     }

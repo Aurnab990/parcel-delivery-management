@@ -58,6 +58,21 @@ const deleteUser = (0, catchAsync_1.catchAsync)((req, res, NextFunction) => __aw
         message: "User deleted successfully",
     });
 }));
+const getSingleUser = (0, catchAsync_1.catchAsync)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const result = yield user_service_1.userService.getSingleUser(id);
+    if (!result) {
+        res.status(http_status_codes_1.StatusCodes.NOT_FOUND).json({
+            success: false,
+            message: "User not found",
+        });
+    }
+    res.status(http_status_codes_1.StatusCodes.OK).json({
+        success: true,
+        message: "Data retrieved successfully",
+        data: result.data
+    });
+}));
 const getAllUsers = (0, catchAsync_1.catchAsync)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield user_service_1.userService.getAllUsers();
     res.status(http_status_codes_1.StatusCodes.OK).json({
@@ -70,6 +85,7 @@ const getAllUsers = (0, catchAsync_1.catchAsync)((req, res, next) => __awaiter(v
 exports.userController = {
     createUser,
     getAllUsers,
+    getSingleUser,
     updateUser,
     updateUserRole,
     deleteUser
