@@ -59,7 +59,7 @@ const deleteUser = (0, catchAsync_1.catchAsync)((req, res, NextFunction) => __aw
     });
 }));
 const getSingleUser = (0, catchAsync_1.catchAsync)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
+    const id = req.params.id;
     const result = yield user_service_1.userService.getSingleUser(id);
     if (!result) {
         res.status(http_status_codes_1.StatusCodes.NOT_FOUND).json({
