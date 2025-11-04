@@ -73,6 +73,15 @@ const getSingleUser = (0, catchAsync_1.catchAsync)((req, res, next) => __awaiter
         data: result.data
     });
 }));
+const getMe = (0, catchAsync_1.catchAsync)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const decodedToken = req.user;
+    const result = yield user_service_1.userService.getMe(decodedToken.userId);
+    res.status(http_status_codes_1.StatusCodes.OK).json({
+        success: true,
+        message: "User retrieved successfully",
+        data: result.data
+    });
+}));
 const getAllUsers = (0, catchAsync_1.catchAsync)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield user_service_1.userService.getAllUsers();
     res.status(http_status_codes_1.StatusCodes.OK).json({
@@ -86,6 +95,7 @@ exports.userController = {
     createUser,
     getAllUsers,
     getSingleUser,
+    getMe,
     updateUser,
     updateUserRole,
     deleteUser

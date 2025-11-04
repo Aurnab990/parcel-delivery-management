@@ -12,6 +12,10 @@ import { envVar } from "./app/config/env";
 
 
 const app = express();
+app.use(cors({
+    origin: envVar.FRONTEND_URL,
+    credentials: true
+}));
 
 app.use(session({
     secret: envVar.SESSION_SECRET_KEY,
@@ -24,10 +28,7 @@ app.use(passport.session());
 app.use(cookieParser());
 app.use(express.json());
 app.set("trust proxy", 1);
-app.use(cors({
-    origin: envVar.FRONTEND_URL,
-    credentials: true
-}));
+
 
 app.use("/api", router);
 
