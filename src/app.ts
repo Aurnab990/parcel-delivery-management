@@ -10,12 +10,13 @@ import "../src/app/config/passport";
 import session from "express-session";
 import { envVar } from "./app/config/env";
 
-
+// Changed here
 const app = express();
 app.use(cors({
     origin: envVar.FRONTEND_URL,
     credentials: true
 }));
+
 
 app.use(session({
     secret: envVar.SESSION_SECRET_KEY,
